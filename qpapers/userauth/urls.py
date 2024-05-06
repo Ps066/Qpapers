@@ -7,5 +7,6 @@ app_name = "userauth"
 urlpatterns = [
     path('sign-in/', login_view, name="login"),
     path('sign-up/', register_view, name="register"),
+    path('sign-out/', logout_view, name="sign-out"),
     
 ]

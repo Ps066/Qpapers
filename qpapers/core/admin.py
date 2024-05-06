@@ -3,6 +3,9 @@ from core.models import *
 
 
 
+class UniversityAdmin(admin.ModelAdmin):
+    list_display = ['uni_id','uni_name']
+
 class CourseAdmin(admin.ModelAdmin):
     list_display = ['course_id','course_code','title']
 
@@ -39,3 +42,4 @@ admin.site.register(Rbt, RBTAdmin)
 admin.site.register(Marks, MarksAdmin)
 admin.site.register(Questions, QuestionsAdmin)
 admin.site.register(Year, YearAdmin)
+admin.site.register(University, UniversityAdmin)

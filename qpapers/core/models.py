@@ -6,10 +6,22 @@ from django.conf import settings
 
 
 
+class University(models.Model):
+    uni_id = ShortUUIDField(unique=True,length=10, max_length=20,prefix="uni-",alphabet="abcdefghijklmnopqrstuvwxyz1234567890")
+    uni_name = models.CharField(max_length=100, null= False, blank= False)
+
+    class Meta:
+        verbose_name_plural = "Universities"
+    
+
+    def __str__(self):
+        return self.uni_name
+
 class Course(models.Model):
     course_id = ShortUUIDField(unique=True,length=10, max_length=20,prefix="cors-",alphabet="abcdefghijklmnopqrstuvwxyz1234567890")
     course_code = models.CharField(max_length=25,unique=True)
     title = models.CharField(max_length=100, unique=True , null= False, blank= False)
+    university = models.ForeignKey(University, on_delete=models.SET_NULL, blank=True,null=True)
 
     class Meta:
         verbose_name_plural = "Courses"
@@ -26,6 +38,16 @@ class Year(models.Model):
 
     def __str__(self):
         return self.year
+    
+class Semester(models.Model):
+    sem_id = ShortUUIDField(unique=True,length=10, max_length=20,prefix="sem-",alphabet="abcdefghijklmnopqrstuvwxyz1234567890")
+    sem = models.CharField(max_length=25,unique=True)
+
+    class Meta:
+        verbose_name_plural = "Years"
+
+    def __str__(self):
+        return self.sem
 
 class Subject(models.Model):
     sub_id = ShortUUIDField(unique=True,length=10, max_length=20,prefix="sub-",alphabet="abcdefghijklmnopqrstuvwxyz1234567890")
@@ -33,6 +55,7 @@ class Subject(models.Model):
     title = models.CharField(max_length=100, null= False, blank= False)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     year = models.ForeignKey(Year, on_delete=models.SET_NULL, null=True,blank=True)
+    sem = models.ForeignKey(Semester, on_delete=models.SET_NULL, null=True,blank=True)
 
     class Meta:
         verbose_name_plural = "Subjects"
@@ -45,6 +68,7 @@ class Institute(models.Model):
     institute_id = ShortUUIDField(unique=True,length=10, max_length=20,prefix="inst-",alphabet="abcdefghijklmnopqrstuvwxyz1234567890")
     institute_name = models.CharField(max_length=100, null= False, blank= False)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)    
+    affiliated_to = models.ForeignKey(University, on_delete=models.SET_NULL, blank=True,null=True)
 
     class Meta:
         verbose_name_plural = "Institutes"
@@ -94,11 +118,10 @@ class Questions(models.Model):
     question_id = ShortUUIDField(unique=True,length=10, max_length=20,prefix="ques-",alphabet="abcdefghijklmnopqrstuvwxyz1234567890")
     questions = models.CharField(max_length=500)
     rbt_level = models.ForeignKey(Rbt, on_delete=models.SET_NULL, null=True)
-    added_by = models.ForeignKey(Faculty, on_delete=models.SET_NULL, null=True)
+    added_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     course = models.ForeignKey(Course, on_delete=models.SET_NULL, null=True)
     subject = models.ForeignKey(Subject, on_delete=models.SET_NULL, null=True)
     marks = models.ForeignKey(Marks, on_delete=models.SET_NULL, null=True)
-    year = models.ForeignKey(Year, on_delete=models.SET_NULL, null=True,blank=True)
     
 
     class Meta:

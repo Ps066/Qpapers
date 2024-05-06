@@ -1,5 +1,13 @@
 {% load static%}
 
+<!-- {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}">
+            <strong>{{ message }}</strong>
+        </div>
+    {% endfor %}
+{% endif %} -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,6 +52,12 @@
   <link rel="preload" as="image" href="{% static '/home/assets/images/hero-banner-2.jpg' %}">
   <link rel="preload" as="image" href="{% static '/home/assets/images/hero-shape-1.svg' %}">
   <link rel="preload" as="image" href="{% static '/home/assets/images/hero-shape-2.png' %}">
+
+  <style>
+    #home{
+      background-image: url('{% static "home/assets/images/hero-bg.svg" %}');
+    }
+  </style>
 
 </head>
 
@@ -110,7 +124,7 @@
           <span class="btn-badge">0</span>
         </button> -->
 
-        <a href="./templates/login.html" class="btn has-before">
+        <a href="/user/sign-in/" class="btn has-before">
           <span class="span">Login</span>
 
           <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -138,8 +152,7 @@
         - #HERO
       -->
 
-      <section class="section hero has-bg-image" id="home" aria-label="home"
-        style="background-image: url('/home/assets/images/hero-bg.svg')">
+      <section class="section hero has-bg-image" id="home" aria-label="home">
         <div class="container">
 
           <div class="hero-content">
@@ -154,7 +167,7 @@
               their examination processes
             </p>
 
-            <a href="./templates/register.html" class="btn has-before">
+            <a href="/user/sign-up/" class="btn has-before">
               <span class="span">Register</span>
 
               <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>

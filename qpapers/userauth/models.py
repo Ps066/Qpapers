@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from shortuuid.django_fields import ShortUUIDField
+from core.models import *
 # Create your models here.
 
 class User(AbstractUser):
@@ -9,6 +10,7 @@ class User(AbstractUser):
     username = models.CharField(max_length=50)
     phone = models.CharField(max_length=25, unique=True, null=True, blank=True)
     userrole = models.CharField(max_length=50, null=False, default="user")
+
 
     
 
